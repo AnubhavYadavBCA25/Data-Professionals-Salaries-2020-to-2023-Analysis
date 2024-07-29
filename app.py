@@ -70,8 +70,8 @@ df_selection = df_temp.query(
 )
 
 # ------------------------------ Main Panel ------------------------------
-st.title("📊Data Professionals Salary Dashboard")
-st.markdown("##")
+st.header("📊Data Professionals Salary Dashboard",divider="rainbow")
+st.markdown("###")
 
 # Top KPI's 
 total_records = int(df_selection.shape[0])
@@ -90,16 +90,95 @@ st.divider()
 
 # Total Income by Job Title
 income_by_job_title = (
-    df_selection.groupby(by="job_title").sum()[["salary_in_usd"]].sort_values(by="salary_in_usd", ascending=True)
+    df_selection.groupby(by="job_title").sum()[["salary_in_usd"]].sort_values(by="salary_in_usd", ascending=False)
 )
 fig_income_by_job_title = px.bar(
     income_by_job_title,
     x="salary_in_usd",
     y=income_by_job_title.index,
     title="<b>Total Income by Job Title</b>",
-    labels={"salary_in_usd": "Total Income (US $)", "index": "Job Title"},
     template="plotly_white",
-    color_discrete_sequence=["#FFA07A"],
+    color=income_by_job_title.index,
     orientation="h"
 )
-st.plotly_chart(fig_income_by_job_title)
+fig_income_by_job_title.update_layout(
+    legend_title_text="Job Title",
+    showlegend=False,
+    xaxis_title="Total Income (US $)",
+    yaxis_title="Job Title",
+    title_x=0.5
+)
+
+# Average Salary by Experience Level
+avg_salary_by_exp_level = (
+    df_selection.groupby(by="experience_level")[["salary_in_usd"]].mean().sort_values(by="salary_in_usd", ascending=False)
+)
+fig_avg_salary_by_exp_level = px.bar(
+    avg_salary_by_exp_level,
+    x=avg_salary_by_exp_level.index,
+    y="salary_in_usd",
+    title="<b>Average Salary by Experience Level</b>",
+    template="plotly_white",
+    color=avg_salary_by_exp_level.index
+)
+fig_avg_salary_by_exp_level.update_layout(
+    legend_title_text="Experience Level",
+    showlegend=False,
+    xaxis_title="Experience Level",
+    yaxis_title="Average Salary (US $)",
+    title_x=0.5
+)
+
+left_column, right_column = st.columns(2)
+with left_column:
+    st.plotly_chart(fig_income_by_job_title)
+
+with right_column:
+    st.plotly_chart(fig_avg_salary_by_exp_level)
+
+# Distribution proportion of Remote Ratio
+remote_ratio_distribution = (
+    df_selection["remote_ratio"].value_counts(normalize=True) * 100
+).sort_values(ascending=False)
+
+fig_remote_ratio_distribution = px.pie(
+    remote_ratio_distribution,
+    values=remote_ratio_distribution.values,
+    names=remote_ratio_distribution.index,
+    title="<b>Remote Ratio Distribution</b>",
+    template="plotly_white",
+    color=remote_ratio_distribution.index,
+    hole=0.3,
+)
+fig_remote_ratio_distribution.update_traces(
+    textposition="outside",
+    textinfo="percent+label"
+)
+fig_remote_ratio_distribution.update_layout(title_x=0.3)
+
+# Distribution proportion of Company Size
+company_size_distribution = (
+    df_selection["company_size"].value_counts(normalize=True) * 100
+).sort_values(ascending=False)
+
+fig_company_size_distribution = px.pie(
+    company_size_distribution,
+    values=company_size_distribution.values,
+    names=company_size_distribution.index,
+    title="<b>Company Size Distribution</b>",
+    template="plotly_white",
+    color=company_size_distribution.index,
+    hole=0.3,
+)
+fig_company_size_distribution.update_traces(
+    textposition="outside",
+    textinfo="percent+label"
+)
+fig_company_size_distribution.update_layout(title_x=0.3)
+
+left_column, right_column = st.columns(2)
+with left_column:
+    st.plotly_chart(fig_remote_ratio_distribution)
+
+with right_column:
+    st.plotly_chart(fig_company_size_distribution)
