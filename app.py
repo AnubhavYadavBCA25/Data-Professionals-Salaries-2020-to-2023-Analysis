@@ -76,15 +76,18 @@ st.markdown("###")
 # Top KPI's 
 total_records = int(df_selection.shape[0])
 total_income = int(df_selection["salary_in_usd"].sum())
+avg_income = int(df_selection["salary_in_usd"].mean())
 
-left_column, right_column = st.columns(2)
+left_column, middle_column, right_column = st.columns(3)
 with left_column:
     st.subheader("Total Records:")
     st.subheader(f"{total_records:,}")
-
-with right_column:
+with middle_column:
     st.subheader("Total Income:")
     st.subheader(f"US ${total_income:,}")
+with right_column:
+    st.subheader("Average Income:")
+    st.subheader(f"US ${avg_income:,}")
 
 st.divider()
 
@@ -136,6 +139,27 @@ with left_column:
 with right_column:
     st.plotly_chart(fig_avg_salary_by_exp_level)
 
+# Total Earned by Year and Job Title
+total_earned_by_year_job_title = (
+    df_selection.groupby(by=["work_year", "job_title"]).sum()[["salary_in_usd"]].sort_values(by="salary_in_usd", ascending=True)
+)
+fig_total_earned_by_year_job_title = px.line(
+    total_earned_by_year_job_title,
+    x=total_earned_by_year_job_title.index.get_level_values(0),
+    y="salary_in_usd",
+    title="<b>Total Earned by Year and Job Title</b>",
+    template="plotly_white",
+    color=total_earned_by_year_job_title.index.get_level_values(1),
+    markers=True,
+    line_shape="spline"
+)
+fig_total_earned_by_year_job_title.update_layout(
+    legend_title_text="Job Title",
+    xaxis_title="Work Year",
+    yaxis_title="Total Earned (US $)"
+)
+st.plotly_chart(fig_total_earned_by_year_job_title)
+
 # Distribution proportion of Remote Ratio
 remote_ratio_distribution = (
     df_selection["remote_ratio"].value_counts(normalize=True) * 100
@@ -182,3 +206,48 @@ with left_column:
 
 with right_column:
     st.plotly_chart(fig_company_size_distribution)
+
+# Top 5 Company Locations with Highest Average Salary
+top_5_locations_avg_salary = (
+    df_selection.groupby(by="company_location")[["salary_in_usd"]].mean().sort_values(by="salary_in_usd", ascending=False).head(5)
+)
+fig_top_5_locations_avg_salary = px.bar(
+    top_5_locations_avg_salary,
+    x=top_5_locations_avg_salary.index,
+    y="salary_in_usd",
+    title="<b>Top 5 Company Locations with Highest Average Salary</b>",
+    template="plotly_white",
+    color=top_5_locations_avg_salary.index
+)
+fig_top_5_locations_avg_salary.update_layout(
+    legend_title_text="Location",
+    showlegend=False,
+    xaxis_title="Company Location",
+    yaxis_title="Average Salary (US $)",
+    title_x=0.2
+)
+
+# Total Count of Experience Level
+exp_level_count = df_selection["experience_level"].value_counts().sort_values(ascending=False)
+fig_exp_level_count = px.bar(
+    exp_level_count,
+    y=exp_level_count.index,
+    x=exp_level_count.values,
+    title="<b>Total Count of Experience Level</b>",
+    template="plotly_white",
+    color=exp_level_count.index,
+    orientation="h"
+)
+fig_exp_level_count.update_layout(
+    legend_title_text="Experience Level",
+    showlegend=False,
+    xaxis_title="Total Count",
+    yaxis_title="Experience Level",
+    title_x=0.5
+)
+
+left_column, right_column = st.columns(2)
+with left_column:
+    st.plotly_chart(fig_top_5_locations_avg_salary)
+with right_column:
+    st.plotly_chart(fig_exp_level_count)
