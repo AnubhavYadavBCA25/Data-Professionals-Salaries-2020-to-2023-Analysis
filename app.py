@@ -24,7 +24,7 @@ css = """
 
 .footer {
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #00172B;
     color: #333;
     text-align: center;
     padding: 10px;
@@ -34,7 +34,7 @@ css = """
     font-size: 16px;
     position: relative;
     bottom: 0;
-    margin-top: 20px; /* Add some space between the content and the footer */
+    margin-top: 20px;
 }
 
 .footer a {
@@ -53,21 +53,24 @@ css = """
     vertical-align: middle;
     margin-right: 5px;
 }
+
+.footer p {
+    color: #fff;
+}
 </style>
 """
 
 # HTML for the footer
 footer_html = """
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div class="footer">
     <p>Developed by Anubhav Yadav</p>
     <p>
-        <a href="https://www.linkedin.com/in/anubhav-yadav-data-science" target="_blank">
-            <img src="" class="icon" />LinkedIn
-        </a>
+        <a href="https://www.linkedin.com/in/anubhav-yadav-data-science" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
         |
-        <a href="https://github.com/AnubhavYadavBCA25" target="_blank">
-            <img src="" class="icon" />GitHub
-        </a>
+        <a href="https://github.com/AnubhavYadavBCA25" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        |
+        <a href="https://sites.google.com/view/anubhavyadavportfolio" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> Portfolio</a>
     </p>
 </div>
 """
@@ -75,6 +78,7 @@ footer_html = """
 st.markdown(css, unsafe_allow_html=True)
 
 # Dataframe
+@st.cache_data
 def get_data_from_csv():
     df = pd.read_csv("cleaned_data_ds_salaries.csv")
     df_temp = df.copy()
@@ -84,7 +88,7 @@ def get_data_from_csv():
     return df_temp
 df_temp = get_data_from_csv()
 
-# ------------------------------ Sidebar ------------------------------
+# ------------------------------ Sidebar For Data Filters ------------------------------
 
 # Job Title Filter
 st.sidebar.header("Please Filter the Data Here:")
@@ -318,3 +322,13 @@ with right_column:
 
 #---------------------------------Footer---------------------------------
 st.markdown(footer_html, unsafe_allow_html=True)
+
+# Hide Streamlit Style
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
