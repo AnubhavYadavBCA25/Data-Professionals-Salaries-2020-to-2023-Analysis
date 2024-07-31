@@ -11,6 +11,69 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# CSS for styling
+css = """
+<style>
+.user-select-none.svg-container {
+    border: 2px solid #1c87c9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #1c87c9, 0 0 15px #1c87c9, 0 0 20px #1c87c9;
+    margin-bottom: 20px;
+}
+
+.footer {
+    width: 100%;
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #e5e5e5;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    position: relative;
+    bottom: 0;
+    margin-top: 20px; /* Add some space between the content and the footer */
+}
+
+.footer a {
+    color: #1c87c9;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+</style>
+"""
+
+# HTML for the footer
+footer_html = """
+<div class="footer">
+    <p>Developed by Anubhav Yadav</p>
+    <p>
+        <a href="https://www.linkedin.com/in/anubhav-yadav-data-science" target="_blank">
+            <img src="" class="icon" />LinkedIn
+        </a>
+        |
+        <a href="https://github.com/AnubhavYadavBCA25" target="_blank">
+            <img src="" class="icon" />GitHub
+        </a>
+    </p>
+</div>
+"""
+# Inject CSS for styling
+st.markdown(css, unsafe_allow_html=True)
+
 # Dataframe
 def get_data_from_csv():
     df = pd.read_csv("cleaned_data_ds_salaries.csv")
@@ -80,7 +143,7 @@ avg_income = int(df_selection["salary_in_usd"].mean())
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-    st.subheader("Total Records:")
+    st.subheader('Total Records:')
     st.subheader(f"{total_records:,}")
 with middle_column:
     st.subheader("Total Income:")
@@ -109,7 +172,7 @@ fig_income_by_job_title.update_layout(
     showlegend=False,
     xaxis_title="Total Income (US $)",
     yaxis_title="Job Title",
-    title_x=0.5
+    title_x=0.2
 )
 
 # Average Salary by Experience Level
@@ -129,7 +192,7 @@ fig_avg_salary_by_exp_level.update_layout(
     showlegend=False,
     xaxis_title="Experience Level",
     yaxis_title="Average Salary (US $)",
-    title_x=0.5
+    title_x=0.2
 )
 
 left_column, right_column = st.columns(2)
@@ -156,7 +219,8 @@ fig_total_earned_by_year_job_title = px.line(
 fig_total_earned_by_year_job_title.update_layout(
     legend_title_text="Job Title",
     xaxis_title="Work Year",
-    yaxis_title="Total Earned (US $)"
+    yaxis_title="Total Earned (US $)",
+    title_x=0.4
 )
 st.plotly_chart(fig_total_earned_by_year_job_title)
 
@@ -243,7 +307,7 @@ fig_exp_level_count.update_layout(
     showlegend=False,
     xaxis_title="Total Count",
     yaxis_title="Experience Level",
-    title_x=0.5
+    title_x=0.2
 )
 
 left_column, right_column = st.columns(2)
@@ -251,3 +315,6 @@ with left_column:
     st.plotly_chart(fig_top_5_locations_avg_salary)
 with right_column:
     st.plotly_chart(fig_exp_level_count)
+
+#---------------------------------Footer---------------------------------
+st.markdown(footer_html, unsafe_allow_html=True)
