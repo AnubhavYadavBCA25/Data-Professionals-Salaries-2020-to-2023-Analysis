@@ -1,4 +1,15 @@
-# <marquee behavior="alternate" scrollamount="10">🌟 **Data Professionals Salaries 2020-2023 Analysis** 🌟</marquee>
+<h1 style="overflow: hidden; white-space: nowrap;">
+  <span style="display: inline-block; animation: marquee 10s linear infinite;">
+    🌟 Data Professionals Salaries 2020-2023 Analysis 🌟
+  </span>
+</h1>
+
+<style>
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+</style>
 
 ## Description
 
