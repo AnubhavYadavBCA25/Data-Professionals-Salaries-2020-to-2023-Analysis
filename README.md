@@ -1,10 +1,4 @@
-<div align="center">
-  <h1>
-    <a href="https://github.com/AnubhavYadavBCA25">
-      <img src="https://readme-typing-svg.herokuapp.com?color=%2336BCF7&size=30&center=true&vCenter=true&width=500&lines=Data+ Professionals+Salaries+2020-2023+Analysis" alt="Data Professionals Salaries 2020-2023 Analysis">
-    </a>
-  </h1>
-</div>
+# <marquee behavior="alternate" scrollamount="10">🌟 **Data Professionals Salaries 2020-2023 Analysis** 🌟</marquee>
 
 ## Description
 
