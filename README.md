@@ -4,13 +4,6 @@
   </span>
 </h1>
 
-<style>
-@keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-</style>
-
 ## Description
 
 This project analyzes the salaries of data professionals from 2020 to 2023. The analysis includes data collection, data cleaning, exploratory data analysis (EDA), and the creation of interactive dashboards using Streamlit and Power BI.
@@ -50,6 +43,6 @@ You can explore the interactive web dashboard here:
 Feel free to reach out for any queries or collaboration:
 
 - **Name:** Anubhav Yadav
-- **LinkedIn:** [Anubhav Yadav LinkedIn](https://www.linkedin.com/in/anubhav-yadav-data-science)
-- **GitHub:** [Anubhav Yadav GitHub](https://github.com/AnubhavYadavBCA25)
-- **Portfolio:** [Anubhav Yadav Portfolio](https://sites.google.com/view/anubhavyadavportfolio)
+- **LinkedIn:** [LinkedIn](https://www.linkedin.com/in/anubhav-yadav-data-science)
+- **GitHub:** [GitHub](https://github.com/AnubhavYadavBCA25)
+- **Portfolio:** [Portfolio](https://sites.google.com/view/anubhavyadavportfolio)
